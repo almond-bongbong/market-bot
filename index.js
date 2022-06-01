@@ -6,7 +6,7 @@ import { sendSlackMessage } from './utils.js';
 
 dotenv.config();
 
-const KEYWORDS = ['면도기', '쉬크', '삼성', '부채살', '비비고'];
+const KEYWORDS = ['면도기', '쉬크', '스타일러', '에어드레서'];
 
 const getLinkByKey = async (key) => {
   const { data } = await axios.get(`https://www.fmkorea.com${key}`);
@@ -35,7 +35,7 @@ const getLinkByKey = async (key) => {
       .filter(
         (item) =>
           KEYWORDS.some((k) => item.title.includes(k)) &&
-          item.createdAt.isAfter(dayjs().subtract(180, 'minutes')),
+          item.createdAt.isAfter(dayjs().subtract(30, 'minutes')),
       );
 
     const links = await Promise.all(
@@ -43,12 +43,10 @@ const getLinkByKey = async (key) => {
     );
     findItems.forEach((item, i) => (item.link = links[i]));
 
-    console.log(findItems.length);
     const message =
       findItems.length > 0 &&
       findItems.map((item) => `🔍 ${item.title}\n${item.link}`).join('\n\n');
 
-    console.log(message);
     if (message) await sendSlackMessage(message);
   } catch (error) {
     console.error(error);
