@@ -6,7 +6,7 @@ import { sendSlackMessage } from './utils.js';
 
 dotenv.config();
 
-const KEYWORDS = ['면도기', '쉬크', '스타일러', '에어드레서', '까베네시라'];
+const KEYWORDS = ['면도기', '쉬크', '스타일러', '에어드레서', '제로'];
 
 const getLinkByKey = async (key) => {
   const { data } = await axios.get(`https://www.fmkorea.com${key}`);
@@ -18,7 +18,7 @@ const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 
 (async () => {
   try {
-    console.log('🚀 Start scraping', process.env.SLACK_CHANNEL_ID);
+    console.log('🚀 Start scraping', `SLACK_CHANNEL_ID : ${process.env.SLACK_CHANNEL_ID}`);
     const { data } = await axios.get('https://www.fmkorea.com/hotdeal');
     const $ = cheerio.load(data);
     const itemElements = $('.fm_best_widget > ul > li').toArray();
