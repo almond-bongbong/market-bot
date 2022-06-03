@@ -5,8 +5,8 @@ name: Node.js CI
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
-#    - cron: '*/30 * * * *'
+#    - cron: '*/5 * * * *'
+    - cron: '*/30 * * * *'
 
 jobs:
   cron:
@@ -31,6 +31,3 @@ jobs:
           SECRETS_CONTEXT: ${{ toJson(secrets) }}
       - run: npm ci
       - run: npm run start
-        env:
-          SLACK_BOT_OAUTH_TOKEN: ${{ secrets.SLACK_BOT_OAUTH_TOKEN }}
-          SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
