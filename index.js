@@ -18,7 +18,7 @@ const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 
 (async () => {
   try {
-    console.log('🚀 Start scraping', `SLACK_CHANNEL_ID : ${process.env.SLACK_CHANNEL_ID}`);
+    console.log('🚀 Start scraping', dayjs().format('YYYY.MM.DD HH:mm'));
     const { data } = await axios.get('https://www.fmkorea.com/hotdeal');
     const $ = cheerio.load(data);
     const itemElements = $('.fm_best_widget > ul > li').toArray();
@@ -52,7 +52,9 @@ const delay = (ms) => new Promise((r) => setTimeout(r, ms));
       findItems.length > 0 &&
       findItems.map((item) => `🔍 ${item.title}\n${item.link}`).join('\n\n');
 
-    if (message) await sendSlackMessage(message);
+    console.log(findItems);
+
+    // if (message) await sendSlackMessage(message);
   } catch (error) {
     console.error(error);
   }
