@@ -6,13 +6,15 @@ import { sendSlackMessage } from './utils.js';
 
 dotenv.config();
 
-const KEYWORDS = ['면도기', '쉬크', '스타일러', '에어드레서', '레노버'];
+const KEYWORDS = ['면도기', '쉬크', '스타일러', '에어드레서', '까베네시라'];
 
 const getLinkByKey = async (key) => {
   const { data } = await axios.get(`https://www.fmkorea.com${key}`);
   const $ = cheerio.load(data);
   return $('.xe_content > a').attr('href');
 };
+
+const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 
 (async () => {
   try {
@@ -39,10 +41,12 @@ const getLinkByKey = async (key) => {
           item.createdAt.isAfter(dayjs().subtract(30, 'minutes')),
       );
 
-    const links = await Promise.all(
-      findItems.map((item) => getLinkByKey(item.key)),
-    );
-    findItems.forEach((item, i) => (item.link = links[i]));
+    await delay(1000);
+
+    for (const item of findItems) {
+      item.link = await getLinkByKey(item.key);
+      await delay(1000);
+    }
 
     const message =
       findItems.length > 0 &&
