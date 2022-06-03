@@ -2,8 +2,13 @@ import axios from 'axios';
 import * as cheerio from 'cheerio';
 import dotenv from 'dotenv';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 import { sendSlackMessage } from './utils.js';
 
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault('Asia/Seoul');
 dotenv.config();
 
 const KEYWORDS = ['면도기', '쉬크', '스타일러', '에어드레서', '제로'];
@@ -52,9 +57,7 @@ const delay = (ms) => new Promise((r) => setTimeout(r, ms));
       findItems.length > 0 &&
       findItems.map((item) => `🔍 ${item.title}\n${item.link}`).join('\n\n');
 
-    console.log(findItems);
-
-    // if (message) await sendSlackMessage(message);
+    if (message) await sendSlackMessage(message);
   } catch (error) {
     console.error(error);
   }
