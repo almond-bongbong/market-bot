@@ -16,6 +16,7 @@ const getLinkByKey = async (key) => {
 
 (async () => {
   try {
+    console.log('🚀 Start scraping');
     const { data } = await axios.get('https://www.fmkorea.com/hotdeal');
     const $ = cheerio.load(data);
     const itemElements = $('.fm_best_widget > ul > li').toArray();
