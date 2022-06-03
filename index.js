@@ -18,7 +18,7 @@ const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 
 (async () => {
   try {
-    console.log('🚀 Start scraping');
+    console.log('🚀 Start scraping', process.env.SLACK_CHANNEL_ID);
     const { data } = await axios.get('https://www.fmkorea.com/hotdeal');
     const $ = cheerio.load(data);
     const itemElements = $('.fm_best_widget > ul > li').toArray();
