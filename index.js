@@ -6,12 +6,13 @@ import utc from 'dayjs/plugin/utc.js';
 import timezone from 'dayjs/plugin/timezone.js';
 import { sendSlackMessage } from './utils.js';
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dotenv.config();
-
 const TIMEZONE = 'Asia/Seoul';
 const KEYWORDS = ['면도기', '쉬크', '스타일러', '에어드레서', '제로'];
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault(TIMEZONE);
+dotenv.config();
 
 const getLinkByKey = async (key) => {
   const { data } = await axios.get(`https://www.fmkorea.com${key}`);
@@ -38,15 +39,20 @@ const delay = (ms) => new Promise((r) => setTimeout(r, ms));
         const regDateText = $(item).find('.regdate').text();
         const isTodayRegistered = regDateText.includes(':');
         const createdAt = isTodayRegistered
-          ? dayjs(`${dayjs().tz(TIMEZONE).format('YYYY.MM.DD')} ${regDateText}`)
-          : dayjs(regDateText).tz(TIMEZONE).endOf('day');
+          ? dayjs.tz(
+              `${dayjs().tz(TIMEZONE).format('YYYY.MM.DD')} ${regDateText}`,
+              TIMEZONE,
+            )
+          : dayjs.tz(regDateText, TIMEZONE).endOf('day');
 
         return { key, title, createdAt };
       })
       .filter(
         (item) =>
           KEYWORDS.some((k) => item.title.includes(k)) &&
-          item.createdAt.isAfter(dayjs().tz(TIMEZONE).subtract(30, 'minutes')),
+          item.createdAt
+            .tz(TIMEZONE)
+            .isAfter(dayjs().tz(TIMEZONE).subtract(30, 'minutes')),
       );
 
     await delay(1000);
