@@ -6,7 +6,7 @@ import { sendSlackMessage } from './utils.js';
 
 dotenv.config();
 
-const KEYWORDS = ['면도기', '쉬크', '스타일러', '에어드레서'];
+const KEYWORDS = ['면도기', '쉬크', '스타일러', '에어드레서', '레노버'];
 
 const getLinkByKey = async (key) => {
   const { data } = await axios.get(`https://www.fmkorea.com${key}`);
