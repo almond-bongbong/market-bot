@@ -50,9 +50,7 @@ const delay = (ms) => new Promise((r) => setTimeout(r, ms));
       .filter(
         (item) =>
           KEYWORDS.some((k) => item.title.includes(k)) &&
-          item.createdAt
-            .tz(TIMEZONE)
-            .isAfter(dayjs().tz(TIMEZONE).subtract(30, 'minutes')),
+          item.createdAt.isAfter(dayjs().tz(TIMEZONE).subtract(30, 'minutes')),
       );
 
     await delay(1000);
