@@ -8,7 +8,6 @@ import { sendSlackMessage } from './utils.js';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
-dayjs.tz.setDefault('Asia/Seoul');
 dotenv.config();
 
 const KEYWORDS = ['면도기', '쉬크', '스타일러', '에어드레서', '제로'];
@@ -23,7 +22,7 @@ const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 
 (async () => {
   try {
-    console.log('🚀 Start scraping', dayjs().format('YYYY.MM.DD HH:mm'));
+    console.log('🚀 Start scraping', dayjs().tz('Asia/Seoul').format('YYYY.MM.DD HH:mm'));
     const { data } = await axios.get('https://www.fmkorea.com/hotdeal');
     const $ = cheerio.load(data);
     const itemElements = $('.fm_best_widget > ul > li').toArray();
@@ -35,8 +34,8 @@ const delay = (ms) => new Promise((r) => setTimeout(r, ms));
         const regDateText = $(item).find('.regdate').text();
         const isTodayRegistered = regDateText.includes(':');
         const createdAt = isTodayRegistered
-          ? dayjs(`${dayjs().format('YYYY.MM.DD')} ${regDateText}`)
-          : dayjs(regDateText).endOf('day');
+          ? dayjs(`${dayjs().tz('Asia/Seoul').format('YYYY.MM.DD')} ${regDateText}`)
+          : dayjs(regDateText).tz('Asia/Seoul').endOf('day');
 
         return { key, title, createdAt };
       })
