@@ -4,14 +4,12 @@ import dotenv from 'dotenv';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc.js';
 import timezone from 'dayjs/plugin/timezone.js';
-import { sendSlackMessage } from './utils.js';
 
 const TIMEZONE = 'Asia/Seoul';
 const KEYWORDS = ['면도기', '쉬크', '스타일러', '에어드레서', '제로'];
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
-dayjs.tz.setDefault(TIMEZONE);
 dotenv.config();
 
 const getLinkByKey = async (key) => {
@@ -36,14 +34,21 @@ const delay = (ms) => new Promise((r) => setTimeout(r, ms));
       .map((item) => {
         const key = $(item).find('.title a').attr('href');
         const title = $(item).find('.title a').text().trim();
-        const regDateText = $(item).find('.regdate').text();
-        const isTodayRegistered = regDateText.includes(':');
-        const createdAt = isTodayRegistered
-          ? dayjs.tz(
-              `${dayjs().tz(TIMEZONE).format('YYYY.MM.DD')} ${regDateText}`,
-              TIMEZONE,
-            )
-          : dayjs.tz(regDateText, TIMEZONE).endOf('day');
+        const regDateText = $(item).find('.regdate').text().trim();
+        const isRegisteredIn24hour = regDateText.includes(':');
+        let createdAt;
+
+        if (isRegisteredIn24hour) {
+          const datetime = dayjs.tz(
+            `${dayjs().tz(TIMEZONE).format('YYYY-MM-DD')} ${regDateText}`,
+            TIMEZONE,
+          );
+          createdAt = datetime.isAfter(dayjs().tz(TIMEZONE))
+            ? datetime.subtract(1, 'day')
+            : datetime;
+        } else {
+          createdAt = dayjs.tz(regDateText, TIMEZONE).endOf('day');
+        }
 
         return { key, title, createdAt };
       })
