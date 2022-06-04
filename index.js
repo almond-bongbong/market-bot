@@ -6,7 +6,7 @@ import utc from 'dayjs/plugin/utc.js';
 import timezone from 'dayjs/plugin/timezone.js';
 
 const TIMEZONE = 'Asia/Seoul';
-const KEYWORDS = ['면도기', '쉬크', '스타일러', '에어드레서', '제로'];
+const KEYWORDS = ['면도기', '쉬크', '스타일러', '에어드레서', '딜라이트'];
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
