@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc.js';
 import timezone from 'dayjs/plugin/timezone.js';
+import { sendSlackMessage } from './utils.js';
 
 const TIMEZONE = 'Asia/Seoul';
 const KEYWORDS = ['면도기', '쉬크', '스타일러', '에어드레서', '딜라이트'];
@@ -55,7 +56,7 @@ const delay = (ms) => new Promise((r) => setTimeout(r, ms));
       .filter(
         (item) =>
           KEYWORDS.some((k) => item.title.includes(k)) &&
-          item.createdAt.isAfter(dayjs().tz(TIMEZONE).subtract(30, 'minutes')),
+          item.createdAt.isAfter(dayjs().tz(TIMEZONE).subtract(40, 'minutes')),
       );
 
     await delay(1000);
@@ -64,6 +65,8 @@ const delay = (ms) => new Promise((r) => setTimeout(r, ms));
       item.link = await getLinkByKey(item.key);
       await delay(1000);
     }
+
+    console.log(findItems);
 
     const message =
       findItems.length > 0 &&
