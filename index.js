@@ -14,9 +14,11 @@ dayjs.extend(timezone);
 dotenv.config();
 
 const getLinkByKey = async (key) => {
-  const { data } = await axios.get(`https://www.fmkorea.com${key}`);
+  const originUrl = `https://www.fmkorea.com${key}`;
+  const { data } = await axios.get(originUrl);
   const $ = cheerio.load(data);
-  return $('.xe_content > a').attr('href');
+  const link = $('.xe_content > a').attr('href');
+  return { originUrl, link };
 };
 
 const delay = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -62,15 +64,15 @@ const delay = (ms) => new Promise((r) => setTimeout(r, ms));
     await delay(1000);
 
     for (const item of findItems) {
-      item.link = await getLinkByKey(item.key);
+      const { link, originUrl } = await getLinkByKey(item.key);
+      item.link = link;
+      item.originUrl = originUrl;
       await delay(1000);
     }
 
-    console.log(findItems);
-
     const message =
       findItems.length > 0 &&
-      findItems.map((item) => `🔍 ${item.title}\n${item.link}`).join('\n\n');
+      findItems.map((item) => `🔍 ${item.title}\n🔗 ${item.link}\n🔗 ${item.originUrl}`).join('\n\n');
 
     if (message) await sendSlackMessage(message);
   } catch (error) {
