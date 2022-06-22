@@ -70,6 +70,8 @@ const delay = (ms) => new Promise((r) => setTimeout(r, ms));
       await delay(1000);
     }
 
+    console.log(`Found ${findItems.length} items`);
+
     const message =
       findItems.length > 0 &&
       findItems.map((item) => `🔍 ${item.title}\n🔗 ${item.link}\n🔗 ${item.originUrl}`).join('\n\n');
