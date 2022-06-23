@@ -78,6 +78,6 @@ const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 
     if (message) await sendSlackMessage(message);
   } catch (error) {
-    console.error(error);
+    console.error('Exception: ', error);
   }
 })();
