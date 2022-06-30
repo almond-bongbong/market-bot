@@ -71,7 +71,7 @@ const delay = (ms) => new Promise((r) => setTimeout(r, ms));
     }
 
     if (findItems.length) {
-      console.log(`Found ${findItems.length} items`);
+      console.log(`🔍 Found ${findItems.length} items`);
     }
 
     const message =
@@ -80,6 +80,6 @@ const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 
     if (message) await sendSlackMessage(message);
   } catch (error) {
-    console.error('Error:', error);
+    console.error('❌ Error:', error);
   }
 })();
