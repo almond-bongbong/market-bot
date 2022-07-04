@@ -7,7 +7,7 @@ import timezone from 'dayjs/plugin/timezone.js';
 import { sendSlackMessage } from './utils.js';
 
 const TIMEZONE = 'Asia/Seoul';
-const KEYWORDS = ['면도기', '쉬크', '스타일러', '에어드레서', '정수기', '질레트', '우산', '제로'];
+const KEYWORDS = ['면도기', '쉬크', '스타일러', '에어드레서', '정수기', '질레트', '제로'];
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
