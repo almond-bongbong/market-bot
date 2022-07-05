@@ -1,3 +1,3 @@
 ## Hotdeal scrap bot
 
-- github action을 이용한 배치 처리
+- [x] github action을 이용한 배치 처리
