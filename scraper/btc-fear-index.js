@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
-import { sendSlackMessage } from 'utils.js';
+import { sendSlackMessage } from '../utils.js';
 
 export const scrapeCryptoFearIndex = async () => {
   try {
