@@ -10,12 +10,11 @@ export const scrapeCryptoFearIndex = async () => {
     const $ = cheerio.load(data);
     const fngElements = $('.fng-value').toArray();
     const nowFngValue = Number($(fngElements[0]).find('.fng-circle').text());
+    const message = `BTC Fear Index is low : ${nowFngValue}`;
 
+    console.log(message);
     if (nowFngValue <= 15) {
-      await sendSlackMessage(
-        `BTC Fear Index is low : ${nowFngValue}`,
-        process.env.SLACK_BTC_CHANNEL_ID,
-      );
+      await sendSlackMessage(message, process.env.SLACK_BTC_CHANNEL_ID);
     }
   } catch (error) {
     console.error('❌ Error:', error);
