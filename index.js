@@ -4,6 +4,7 @@ import utc from 'dayjs/plugin/utc.js';
 import timezone from 'dayjs/plugin/timezone.js';
 import { scrapeHotDeal } from './scraper/hotdeal.js';
 import { scrapeCryptoFearIndex } from './scraper/btc-fear-index.js';
+import { scrapeHibikiIn } from './scraper/whisky-in.js';
 import { TIMEZONE } from './utils.js';
 
 dayjs.extend(utc);
@@ -15,6 +16,7 @@ dotenv.config();
     '🚀 Start scraping',
     dayjs().tz(TIMEZONE).format('YYYY.MM.DD HH:mm'),
   );
-  scrapeHotDeal();
-  scrapeCryptoFearIndex();
+  // scrapeHotDeal();
+  // scrapeCryptoFearIndex();
+  scrapeHibikiIn();
 })();
