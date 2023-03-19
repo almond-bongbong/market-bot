@@ -2,7 +2,14 @@ import axios from 'axios';
 import qs from 'querystring';
 import { sendSlackMessage } from '../utils.js';
 
-const WANTED_SHOES = ['M991GL', 'M991NV (MEN)', 'M990GY3', 'M990VS3'];
+const WANTED_SHOES = [
+  'M991GL',
+  'M991EKS (MEN)',
+  'M991NV (MEN)',
+  'M990GY3',
+  'M990VS3',
+  'M991UKF',
+];
 
 export const scrapeNewBalance = async () => {
   try {
