@@ -14,7 +14,7 @@ dotenv.config();
 
 (async () => {
   console.log(
-    '🚀 Start scraping',
+    '🚀 Start Scraping at',
     dayjs().tz(TIMEZONE).format('YYYY.MM.DD HH:mm'),
   );
   scrapeCryptoFearIndex();
