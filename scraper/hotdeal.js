@@ -4,11 +4,11 @@ import * as cheerio from 'cheerio';
 import { delay, sendSlackMessage, TIMEZONE } from '../utils.js';
 
 const KEYWORDS = [
-  // '면도날',
-  // '쉬크',
+  '면도날',
+  '쉬크',
   '스타일러',
   '에어드레서',
-  // '질레트',
+  '질레트',
 ];
 
 const getLinkByKey = async (key) => {
