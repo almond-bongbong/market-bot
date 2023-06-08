@@ -8,6 +8,7 @@ const KEYWORDS = [
   '스타일러',
   '에어드레서',
   '고등어',
+  '샴푸',
 ];
 
 const getLinkByKey = async (key) => {
