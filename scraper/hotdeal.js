@@ -5,6 +5,7 @@ import { delay, sendSlackMessage, TIMEZONE } from '../utils.js';
 
 const KEYWORDS = [
   '쉬크',
+  '시크',
   '스타일러',
   '고등어',
 ];
