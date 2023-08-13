@@ -8,6 +8,7 @@ const KEYWORDS = [
   '시크',
   '스타일러',
   '고등어',
+  '숄더'
 ];
 
 const getLinkByKey = async (key) => {
