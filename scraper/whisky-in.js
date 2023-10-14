@@ -5,10 +5,10 @@ import { sendSlackMessage } from '../utils.js';
 export const scrapeHibikiIn = async () => {
   try {
     const { data } = await axios.get(
-      'https://www.pocketcu.co.kr/product/detail/2022080021854?cateTyp=A&chldMealEvtYn=null',
+      'https://www.pocketcu.co.kr/product/detail/2022080021854?store_cd=&cateTyp=A&chldMealEvtYn=null&isNetYn=Y',
     );
     const $ = cheerio.load(data);
-    const contentDiv = $('#contents > .sub');
+    const contentDiv = $('#container #contents > .sub');
     const className = contentDiv.attr('class');
 
     if (
