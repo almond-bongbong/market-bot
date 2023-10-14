@@ -3,12 +3,7 @@ import axios from 'axios';
 import * as cheerio from 'cheerio';
 import { delay, sendSlackMessage, TIMEZONE } from '../utils.js';
 
-const KEYWORDS = [
-  '쉬크',
-  '시크',
-  '스타일러',
-  '고등어',
-];
+const KEYWORDS = ['쉬크', '시크', '스타일러', '고등어'];
 
 const getLinkByKey = async (key) => {
   const originUrl = `https://www.fmkorea.com${key}`;
@@ -46,11 +41,14 @@ export const scrapeHotDeal = async () => {
 
         return { key, title, createdAt };
       })
-      .filter(
-        (item) =>
-          KEYWORDS.some((k) => item.title.includes(k)) &&
-          item.createdAt.isAfter(dayjs().tz(TIMEZONE).subtract(32, 'minutes')),
-      );
+      .filter((item) => {
+        const hasKeyword = KEYWORDS.some((k) => item.title.includes(k));
+        const isCreatedIn32minutes = item.createdAt.isAfter(
+          dayjs().tz(TIMEZONE).subtract(32, 'minutes'),
+        );
+
+        return hasKeyword && isCreatedIn32minutes;
+      });
 
     await delay(1000);
 
