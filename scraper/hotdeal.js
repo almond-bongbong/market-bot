@@ -3,7 +3,7 @@ import axios from 'axios';
 import * as cheerio from 'cheerio';
 import { delay, sendSlackMessage, TIMEZONE } from '../utils.js';
 
-const KEYWORDS = ['쉬크', '시크', '스타일러', '고등어'];
+const KEYWORDS = ['쉬크', '시크', '스타일러', '고등어', '제로'];
 
 const getLinkByKey = async (key) => {
   const originUrl = `https://www.fmkorea.com${key}`;
@@ -15,7 +15,8 @@ const getLinkByKey = async (key) => {
 
 export const scrapeHotDeal = async () => {
   try {
-    const { data } = await axios.get('https://www.fmkorea.com/hotdeal');
+    // const { data } = await axios.get('https://www.fmkorea.com/hotdeal');
+    const { data } = await axios.get('https://m.fmkorea.com/index.php?mid=hotdeal&page=1');
     const $ = cheerio.load(data);
     const itemElements = $('.fm_best_widget > ul > li').toArray();
 
