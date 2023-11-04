@@ -3,7 +3,7 @@ import axios from 'axios';
 import * as cheerio from 'cheerio';
 import { delay, sendSlackMessage, TIMEZONE } from '../utils.js';
 
-const KEYWORDS = ['쉬크', '시크', '스타일러', '고등어', '헤드'];
+const KEYWORDS = ['쉬크', '시크', '스타일러', '고등어', '숄더'];
 
 const getLinkByKey = async (key) => {
   const originUrl = `https://www.fmkorea.com${key}`;
